@@ -3,7 +3,7 @@ import React from "react";
 import { css } from "@emotion/react";
 import { ReactComponent as Texture } from "../assets/resultTexture.svg";
 import { ReactComponent as Close } from "../assets/close.svg";
-import { fadeIn } from "../style/keyframes";
+import { fadeUp } from "../style/keyframes";
 
 interface modalTypes {
   state: boolean;
@@ -45,7 +45,7 @@ export default function Modal({ state, setState }: modalTypes) {
           z-index: 11;
           width: 20rem;
           height: 20rem;
-          animation: ${fadeIn} 1s ease-in-out;
+          animation: ${fadeUp} 1s ease-in-out;
         `}
       >
         {/* <img

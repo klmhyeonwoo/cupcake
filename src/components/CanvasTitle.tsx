@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { fadeIn } from "../style/keyframes";
 
 interface CanvasTitleTypes {
   marbleLength: number;
@@ -19,6 +20,7 @@ export default function CanvasTitle({ marbleLength }: CanvasTitleTypes) {
         flex-direction: column;
         font-size: 1.5rem;
         font-weight: 700;
+        animation: ${fadeIn} 1s ease-in-out;
 
         span {
           display: block;
