@@ -29,11 +29,19 @@ export default function Locker({ checkIsFloor }: LockerType) {
     }
   };
 
-  const handleDrag = (e) => {
+  const handleDrag = (
+    e:
+      | React.TouchEvent<HTMLElement>
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+  ): void => {
     if (!isDragging) return;
-    const currentY = e.type.includes("touch")
-      ? e.touches[0].clientY
-      : e.clientY;
+    let currentY = 0;
+
+    if (e.nativeEvent instanceof TouchEvent) {
+      currentY = e.nativeEvent.touches[0].clientY;
+    } else {
+      currentY = (e as React.MouseEvent<HTMLDivElement, MouseEvent>).clientY;
+    }
     const deltaY = currentY - startY;
     if (dragContainerRef.current) {
       const containerHeight = dragContainerRef.current.clientHeight; // 컨테이너 높이
@@ -68,8 +76,8 @@ export default function Locker({ checkIsFloor }: LockerType) {
       id="drag-container"
       onMouseDown={handleDragStart}
       onTouchStart={handleDragStart}
-      onMouseMove={handleDrag}
-      onTouchMove={handleDrag}
+      onMouseMove={(e) => handleDrag(e)}
+      onTouchMove={(e) => handleDrag(e)}
       onMouseUp={handleDragEnd}
       onTouchEnd={handleDragEnd}
       onMouseLeave={handleDragEnd} // 옵션: 마우스가 컨테이너를 벗어날 때
