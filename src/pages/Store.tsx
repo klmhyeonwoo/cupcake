@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
 import Container from "../components/Container";
 import Canvas from "../components/Canvas";
 
