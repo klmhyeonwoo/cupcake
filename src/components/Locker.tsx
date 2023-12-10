@@ -17,9 +17,18 @@ export default function Locker({ checkIsFloor }: LockerType) {
   const dragItemRef = useRef<HTMLDivElement | null>(null);
   const dragContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const handleDragStart = (e) => {
+  const handleDragStart = (
+    e:
+      | React.TouchEvent<HTMLElement>
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     setIsDragging(true);
-    const clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
+    let clientY = 0;
+    if (e.nativeEvent instanceof TouchEvent) {
+      clientY = e.nativeEvent.touches[0].clientY;
+    } else {
+      clientY = (e as React.MouseEvent<HTMLDivElement, MouseEvent>).clientY;
+    }
     setStartY(clientY);
     if (dragItemRef.current) {
       const rect = dragItemRef.current.getBoundingClientRect();
@@ -74,8 +83,8 @@ export default function Locker({ checkIsFloor }: LockerType) {
   return (
     <div
       id="drag-container"
-      onMouseDown={handleDragStart}
-      onTouchStart={handleDragStart}
+      onMouseDown={(e) => handleDragStart(e)}
+      onTouchStart={(e) => handleDragStart(e)}
       onMouseMove={(e) => handleDrag(e)}
       onTouchMove={(e) => handleDrag(e)}
       onMouseUp={handleDragEnd}
