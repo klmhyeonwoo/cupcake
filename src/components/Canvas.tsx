@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+// import React from "react";
 import { css } from "@emotion/react";
 import { useRef } from "react";
 import { useEffect } from "react";
@@ -11,6 +11,7 @@ import clearTexture from "../assets/clearTexture.svg";
 import Modal from "./Modal";
 import { useState } from "react";
 import MarbleTypes from "../../node_modules/.pnpm/@types+matter-js@0.19.5/node_modules/@types/matter-js";
+import MatterTypes from "../types/mattercustom";
 import CanvasTitle from "./CanvasTitle";
 
 export default function Canvas() {
@@ -38,8 +39,8 @@ export default function Canvas() {
     Bodies,
     Mouse,
     MouseConstraint,
-    Composite,
-    Sleeping,
+    // Composite,
+    // Sleeping,
   } = Matter;
   let scroll = false;
   let mobile = false;
@@ -107,12 +108,6 @@ export default function Canvas() {
               xScale: 1.1,
               yScale: 1.1,
             },
-            text: {
-              content: "test",
-              color: "black",
-              size: 16,
-              family: "Papyrus",
-            },
           },
         })
       );
@@ -133,7 +128,7 @@ export default function Canvas() {
       generate();
     }, 200);
 
-    const mouse = Mouse.create(render.canvas);
+    const mouse: MatterTypes.Mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse: mouse,
       constraint: {

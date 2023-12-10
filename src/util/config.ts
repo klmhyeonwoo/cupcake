@@ -1,5 +1,3 @@
-import Matter from "matter-js";
-
 export const wallOptions = {
   isStatic: true, // 정적 객체로 설정하여 이동하지 않도록 함
   restitution: 0,
