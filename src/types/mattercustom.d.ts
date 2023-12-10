@@ -3245,10 +3245,10 @@ declare namespace Matter {
         wheelDelta: number;
         button: number;
         pixelRatio: number;
-        mousedown(event: Event):void; 
-        mousemove(event: Event):void; 
-        mouseup(event: Event):void; 
-        mousewheel(event: Event):void;
+        mousedown(event?: Event):void; 
+        mousemove(event?: Event):void; 
+        mouseup(event?: Event):void; 
+        mousewheel(event?: Event):void;
     }
 
     export class Common {
