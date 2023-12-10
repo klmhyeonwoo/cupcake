@@ -11,7 +11,6 @@ import clearTexture from "../assets/clearTexture.svg";
 import Modal from "./Modal";
 import { useState } from "react";
 import MarbleTypes from "../../node_modules/.pnpm/@types+matter-js@0.19.5/node_modules/@types/matter-js";
-import MatterCustom from "../types/customMatter";
 import CanvasTitle from "./CanvasTitle";
 
 declare module "matter-js" {
