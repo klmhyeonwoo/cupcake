@@ -66,12 +66,6 @@ export default function Canvas() {
     const width = containerWidth ? parseInt(containerWidth) + 100 : 485;
     const height = window.innerHeight + 200;
 
-    if (containerRef.current) {
-      containerRef.current.scrollLeft =
-        (containerRef.current.scrollWidth - containerRef.current.offsetWidth) /
-        2;
-    }
-
     const engine = Engine.create();
     setEngine(engine);
     const render = Render.create({
@@ -81,7 +75,7 @@ export default function Canvas() {
       options: {
         width: width,
         height: height,
-        background: "transparent",
+        background: "linear-gradient(white 40%, rgba(222,244,246, 0.8))",
         wireframes: false,
         showCollisions: false,
       },
@@ -109,7 +103,7 @@ export default function Canvas() {
         Bodies.circle(350, 0, 66, {
           label: `ball`,
           restitution: 0,
-          motion: 0.4,
+          motion: 1,
           render: {
             sprite: {
               texture: previewTexture,
@@ -134,7 +128,7 @@ export default function Canvas() {
 
     setTimeout(() => {
       generate();
-    }, 200);
+    }, 500);
 
     const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
@@ -150,13 +144,21 @@ export default function Canvas() {
     Matter.Runner.run(engine);
     Render.run(render);
 
+    /** 스크롤을 중간으로 이동 */
+    if (containerRef.current) {
+      containerRef.current.scrollLeft =
+        (containerRef.current.scrollWidth - containerRef.current.offsetWidth) /
+        2;
+    }
+
     Matter.Events.on(mouseConstraint, "mousedown", (event) => {
       scroll = false;
       const clickedBody = event.source.body;
 
       if (clickedBody && clickedBody.label === "ball" && !mobile) {
         setMarble(event.source.body);
-        setModal(true);
+        // setModal(true);
+        // console.log(event.source.body);
       }
     });
 
@@ -216,6 +218,7 @@ export default function Canvas() {
   /** 모달이 종료되었을 때 렌더링 */
   useEffect(() => {
     if (!modal && globalEngine && marble && marble.label === "ball") {
+      World.remove(globalEngine.world, marble);
       World.add(
         globalEngine.world,
         Bodies.circle(300, 0, 65, {
@@ -231,7 +234,6 @@ export default function Canvas() {
           },
         })
       );
-      World.remove(globalEngine.world, marble);
     }
   }, [modal]);
 
