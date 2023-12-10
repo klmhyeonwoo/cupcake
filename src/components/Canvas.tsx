@@ -11,8 +11,17 @@ import clearTexture from "../assets/clearTexture.svg";
 import Modal from "./Modal";
 import { useState } from "react";
 import MarbleTypes from "../../node_modules/.pnpm/@types+matter-js@0.19.5/node_modules/@types/matter-js";
-import MatterTypes from "../types/mattercustom";
+import MatterCustom from "../types/customMatter";
 import CanvasTitle from "./CanvasTitle";
+
+declare module "matter-js" {
+  interface Mouse {
+    mousedown(event?: Event): void;
+    mousemove(event?: Event): void;
+    mouseup(event?: Event): void;
+    mousewheel(event?: Event): void;
+  }
+}
 
 export default function Canvas() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,8 +46,8 @@ export default function Canvas() {
     Render,
     World,
     Bodies,
-    Mouse,
     MouseConstraint,
+    Mouse,
     // Composite,
     // Sleeping,
   } = Matter;
@@ -115,7 +124,7 @@ export default function Canvas() {
 
     function generate() {
       if (storeMarble.length > 0) {
-        Array.from({ length: Math.random() * 5 }).forEach((_) => {
+        Array.from({ length: Math.random() * 5 }).forEach(() => {
           if (storeMarble.length > 0) {
             World.add(engine.world, storeMarble.pop()!);
           }
@@ -128,7 +137,7 @@ export default function Canvas() {
       generate();
     }, 200);
 
-    const mouse: MatterTypes.Mouse = Mouse.create(render.canvas);
+    const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse: mouse,
       constraint: {
